@@ -4,7 +4,6 @@ import '../App.css';
 type ButtonPropsType = {
     title: string
     counter: () => void
-    states?:number
     disabled: boolean
 }
 

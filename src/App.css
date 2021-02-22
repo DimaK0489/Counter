@@ -33,5 +33,10 @@
 .title{
   font-size: 45px;
 }
+.inputs{
+  display: block;
+  text-align: center;
+  width: 20px;
 
+}
 
