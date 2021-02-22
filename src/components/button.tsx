@@ -11,9 +11,10 @@ type ButtonPropsType = {
 function Button(props:ButtonPropsType){
     return(
         <button className={'Button'}
-                onClick={() => props.counter() }
+                onClick={() => props.counter()}
                 disabled={props.disabled}
-                >{props.title} </button>
+                >{props.title}
+        </button>
     )
 }
 
