@@ -34,9 +34,12 @@
   font-size: 45px;
 }
 .inputs{
-  display: block;
-  text-align: center;
-  width: 20px;
-
+  margin: 20px auto;
+  padding: 20px;
+  width: 220px;
+  height: 60px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: deepskyblue;
 }
 
