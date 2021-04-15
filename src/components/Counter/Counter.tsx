@@ -15,7 +15,7 @@ type CounterPropsType = {
 export const Counter = React.memo((props: CounterPropsType) => {
     return (
         <div className={style.counterWrapper}>
-            <div className={`${props.counter === props.maxValue ? style.maximum : style.usual}`}>
+            <div className={`${props.counter === props.maxValue ? style.maximum : style.usual} ${style.screen}` }>
                 {props.error === "work" ? props.counter : props.error}
             </div>
             <div className={style.buttons}>

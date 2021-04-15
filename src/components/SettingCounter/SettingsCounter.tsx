@@ -3,7 +3,6 @@ import style from "./Settings.module.css"
 import Button from "../Button/Button";
 import {StateType} from "../../App";
 
-
 export type SettingsType = {
     maxValue: number
     minValue: number
@@ -43,20 +42,25 @@ export const Settings = React.memo((props: SettingsType) => {
         checkValue(maxValue, minValue, minValue, maxValue)
         props.saveState("savedValues", {maxValue, minValue})
     }
+
     return (
         <div className={style.counterWrapper}>
             <div className={style.screen}>
                 <input id="outlined-password-input"
+                       name={"Max Value"}
                        defaultValue={props.maxValue}
                        type="number"
                        onChange={onChangeForMinValue}
                        onClick={setCallback}
                 />
                 <input id="outlined-password-input"
+                       name={"Max Value"}
                        defaultValue={props.maxValue}
-                       type="number" onChange={onChangeForMaxValue} onClick={setCallback}/>
+                       type="number"
+                       onChange={onChangeForMaxValue}
+                       onClick={setCallback}/>
 
-                <div className={style.button}>
+                <div className={style.buttons}>
                     <Button disabled={props.error !== 'work' && props.error !== 'press \'set\''}
                             title={'set'}
                             callback={setCallback}/>

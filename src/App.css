@@ -7,41 +7,9 @@
   background-size: cover;
 }
 
-.CounterWrapper{
-  width: 300px;
-  height: 200px;
-  border: 3px solid deepskyblue;
-  margin: 20px auto 0 auto;
-  border-radius: 5px;
-  font-size: 30px;
-  background: blueviolet;
-}
-.counter{
-  border: 1px solid #000000;
-  margin: 20px;
-  padding: 30px;
-  background: deepskyblue;
-  border-radius: 5px;
-}
-.Button{
-  background-color: deepskyblue;
-  border: none;
-  padding: 10px 30px;
-  margin: 10px 30px;
-  font-size:15px;
-  border-radius: 5px;
-}
 
-.title{
-  font-size: 45px;
-}
-.inputs{
-  margin: 20px auto;
-  padding: 20px;
-  width: 220px;
-  height: 60px;
-  border: 1px solid black;
-  border-radius: 5px;
-  background-color: deepskyblue;
-}
+
+
+
+
 
