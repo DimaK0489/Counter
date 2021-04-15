@@ -1,53 +1,61 @@
 import React, {useState} from 'react';
 import './App.css';
-import Counter from "./components/counter";
-import Button from "./components/button";
-import {Input} from "./components/Input";
+import {Counter} from "./components/Counter/Counter";
+import {Settings} from './components/SettingCounter/SettingsCounter';
+
+export type StateType = {
+    maxValue: number
+    minValue: number
+}
 
 function App() {
-    let [state, setState] = useState<number>(0)
-    let [style, setStyle] = useState<string>('')
-
-    let styles = ''
-    const counterIncrement = () => {
-        let count = state + 1
-        if (count >= 5) {
-            styles = 'colorRed'
-            setStyle(styles)
-        }
-        setState(count)
+    function saveState<StateType>(key: string, state: StateType) {
+        const stateAsString = JSON.stringify(state);
+        localStorage.setItem(key, stateAsString)
     }
 
-    const counterReset = () => {
-        setStyle('')
-        setState(0)
+    function restoreState<StateType>(key: string, defaultState: StateType) {
+        const stateAsString = localStorage.getItem(key)
+        if (stateAsString !== null) defaultState = JSON.parse(stateAsString) as StateType
+        return defaultState
+    }
+
+    const state: StateType = restoreState<StateType>("savedValues", {maxValue: 10, minValue: 0})
+
+    let [minValue, setMinValue] = useState<number>(state.minValue)
+    let [maxValue, setMaxValue] = useState<number>(state.maxValue)
+    let [counter, setCounter] = useState<number>(state.minValue)
+    let [error, setError] = useState<string>("work")
+
+    const add = () => {
+        setCounter(counter + 1)
+    }
+    const reset = () => {
+        setCounter(state.minValue)
+    }
+    const settingValues = (state: StateType) => {
+        setMaxValue(state.maxValue)
+        setCounter(state.minValue)
+        setMinValue(state.minValue)
     }
 
     return (
         <div className="App">
-                <span className='title'>Counter</span>
-                <div className='CounterWrapper'>
-                    <Counter
-                        states={state}
-                        styles={style}
-                    />
-                    <div className="buttonBlock">
-                        <Button
-                            title='Inc'
-                            counter={counterIncrement}
-                            disabled={state === 5}
-                        />
-                        <Button
-                            title='Reset'
-                            counter={counterReset}
-                            disabled={state === 0}
-                        />
-                    </div>
-                </div>
-
-                <div className='CounterWrapper'>
-                    <Input />
-                </div>
+            <Settings
+                minValue={state.minValue}
+                maxValue={state.maxValue}
+                error={error}
+                saveState={saveState}
+                setError={setError}
+                settingValue={settingValues}
+            />
+            <Counter
+                counter={counter}
+                add={add}
+                reset={reset}
+                minValue={minValue}
+                maxValue={maxValue}
+                error={error}/>
         </div>
     );
 }

@@ -1,0 +1,27 @@
+.counterWrapper{
+    width: 300px;
+    height: 200px;
+    border: 3px solid deepskyblue;
+    margin: 20px auto 0 auto;
+    border-radius: 5px;
+    font-size: 30px;
+    background: blueviolet;
+}
+.screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    width: 200px;
+    height: 250px;
+    margin: 20px;
+    padding: 10px;
+}
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    border: 3px solid #ae5c6a;
+    margin: 20px;
+    padding: 10px;
+}

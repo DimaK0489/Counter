@@ -1,0 +1,8 @@
+.button {
+    background-color: deepskyblue;
+    border: none;
+    padding: 10px 30px;
+    margin: 10px 30px;
+    font-size:15px;
+    border-radius: 5px;
+}

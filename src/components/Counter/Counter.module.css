@@ -1,0 +1,21 @@
+.counterWrapper{
+    width: 300px;
+    height: 200px;
+    border: 3px solid deepskyblue;
+    margin: 20px auto 0 auto;
+    border-radius: 5px;
+    font-size: 30px;
+    background: forestgreen;
+}
+.maximum {
+    color: red;
+}
+.usual {
+    color: black;
+}
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+    padding: 10px;
+}

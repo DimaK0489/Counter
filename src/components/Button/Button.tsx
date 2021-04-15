@@ -1,21 +1,21 @@
 import React from 'react';
-import '../App.css';
+import style from "./Button.module.css";
 
 type ButtonPropsType = {
     title: string
-    counter: () => void
+    callback: () => void
     disabled: boolean
 }
 
 
-function Button(props:ButtonPropsType){
+export const Button = React.memo((props:ButtonPropsType) => {
     return(
-        <button className={'Button'}
-                onClick={() => props.counter()}
+        <button className={style.button}
+                onClick={props.callback}
                 disabled={props.disabled}
                 >{props.title}
         </button>
     )
-}
+})
 
 export default Button
