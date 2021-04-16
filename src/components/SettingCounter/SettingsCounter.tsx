@@ -31,7 +31,7 @@ export const Settings = React.memo((props: SettingsPropsType) => {
 
     return <div className={style.counterWrapper}>
 
-        <div className={style.settings}>
+        <div className={style.screen}>
             <Display title={'Start Value'}
                      classNameInput={style.inputValues}
                      onChangeCallback={onChangeHandlerStart}
@@ -52,7 +52,7 @@ export const Settings = React.memo((props: SettingsPropsType) => {
         </div>
 
         <div className={style.button}>
-            <Buttons title={'Set'}
+            <Buttons title={'SET'}
                      disable={props.startValue === props.maxValue
                      || props.startValue > props.maxValue
                      || props.startValue < 0

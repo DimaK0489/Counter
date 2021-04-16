@@ -1,0 +1,12 @@
+.startValue {
+    color: black;
+}
+.maxValue {
+    color: red;
+}
+.window {
+    background-color: wheat;
+    text-align: center;
+    border: 5px solid black;
+    border-radius: 5px;
+}

@@ -20,10 +20,9 @@ export const Display = React.memo( (props: DisplayPropsType) => {
     }
 
     return <div className={style.inputValues}>
-        <div className={props.classNameBlock}> {props.title} </div>
+        <div> {props.title} </div>
         <input type="number"
                value={props.value}
-               className={props.checkCondition ? 'incorrectValue' : props.classNameInput}
                onChange={onChangeHandler}/>
     </div>
 })

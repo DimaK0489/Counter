@@ -18,15 +18,3 @@
     align-content: center;
     margin: 20px;
 }
-.maximum {
-    color: red;
-}
-.usual {
-    color: black;
-}
-.buttons {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px;
-    padding: 10px;
-}
