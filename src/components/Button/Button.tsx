@@ -1,21 +1,16 @@
-import React from 'react';
-import style from "./Button.module.css";
+import React from "react";
+import style from "./Button.module.css"
 
-type ButtonPropsType = {
+type ButtonsPropsType = {
     title: string
-    callback: () => void
-    disabled: boolean
+    onClickHandler: () => void
+    disable: boolean
 }
 
-
-export const Button = React.memo((props:ButtonPropsType) => {
-    return(
-        <button className={style.button}
-                onClick={props.callback}
-                disabled={props.disabled}
-                >{props.title}
-        </button>
-    )
+export const Buttons = React.memo((props: ButtonsPropsType) => {
+    const callback = () => props.onClickHandler()
+    return <button className={style.button}
+                   disabled={props.disable}
+                   onClick={callback}>
+        {props.title}</button>
 })
-
-export default Button

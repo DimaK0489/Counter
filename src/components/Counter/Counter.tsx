@@ -1,32 +1,38 @@
-import React from 'react';
-import style from "./Counter.module.css";
-import Button from "../Button/Button";
+import React from "react";
+import {useDispatch} from "react-redux";
+import {incrementAC, resetAC} from "../Redux/counterReducer";
+import {Buttons} from "../Button/Button";
+import {WindowCounter} from "../Display/WindowCounter";
+import style from "./Counter.module.css"
+
 
 type CounterPropsType = {
-    counter: number
-    add: () => void
-    reset: () => void
-    disabled?: boolean
-    minValue: number
-    maxValue: number
-    error: string
+    disabled:boolean
+    startValue: number
+    maxValue:number
+    countValue:number
 }
 
-export const Counter = React.memo((props: CounterPropsType) => {
-    return (
-        <div className={style.counterWrapper}>
-            <div className={`${props.counter === props.maxValue ? style.maximum : style.usual} ${style.screen}` }>
-                {props.error === "work" ? props.counter : props.error}
-            </div>
-            <div className={style.buttons}>
-                <Button title={"add"}
-                        callback={props.add}
-                        disabled={props.error !== "work" || props.counter === props.maxValue}/>
-                <Button title={"reset"}
-                        callback={props.reset}
-                        disabled={props.error !== "work"}/>
-            </div>
+export const Counter = React.memo((props:CounterPropsType) => {
+
+    const action = useDispatch()
+    const onClickHandlerInc = () => action(incrementAC())
+    const onClickHandlerRes = () => action(resetAC())
+
+    return <div className={style.counterWrapper}>
+
+        <WindowCounter startValue={props.startValue} countValue={props.countValue} maxValue={props.maxValue}/>
+
+        <div className={style.screen}>
+
+            <Buttons title={'Inc'}
+                     disable={props.countValue >= props.maxValue || props.disabled}
+                     onClickHandler={onClickHandlerInc}/>
+            <Buttons title={'Res'}
+                     disable={props.countValue <= props.startValue || props.disabled}
+                     onClickHandler={onClickHandlerRes}/>
+
         </div>
-    )
+    </div>
 })
 

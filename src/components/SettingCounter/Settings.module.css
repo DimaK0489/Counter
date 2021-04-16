@@ -1,8 +1,9 @@
 .counterWrapper{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    flex-direction: column;
     width: 300px;
-    height: 250px;
+    height: 300px;
     border: 3px solid deepskyblue;
     margin: 20px auto 0 auto;
     border-radius: 5px;
@@ -19,9 +20,14 @@
     height: 250px;
     margin: 20px;
 }
-.buttons {
+.inputValues {
+    height: auto;
     display: flex;
+    width: 100%;
     justify-content: space-around;
-    margin: 20px;
-    padding: 10px;
+    align-items: center;
+    font-size: 18px;
+}
+.button {
+
 }

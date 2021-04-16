@@ -1,0 +1,8 @@
+.inputValues {
+    height: auto;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 18px;
+}

@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Counter} from "./components/Counter/Counter";
 import {Settings} from './components/SettingCounter/SettingsCounter';
+import {RootStoreType} from "./components/Redux/store";
+import {saveMaxValue, saveStartValue} from "./components/Redux/counterReducer";
+import {useDispatch, useSelector} from "react-redux";
 
 export type StateType = {
     maxValue: number
@@ -9,53 +12,28 @@ export type StateType = {
 }
 
 function App() {
-    function saveState<StateType>(key: string, state: StateType) {
-        const stateAsString = JSON.stringify(state);
-        localStorage.setItem(key, stateAsString)
-    }
+    const [disabled, setDisabled] = useState<boolean>(false)
 
-    function restoreState<StateType>(key: string, defaultState: StateType) {
-        const stateAsString = localStorage.getItem(key)
-        if (stateAsString !== null) defaultState = JSON.parse(stateAsString) as StateType
-        return defaultState
-    }
+    const countValue = useSelector<RootStoreType, number>(state => state.count.countValue)
+    const maxValue = useSelector<RootStoreType, number>(state => state.count.maxValue)
+    const startValue = useSelector<RootStoreType, number>(state => state.count.startValue)
 
-    const state: StateType = restoreState<StateType>("savedValues", {maxValue: 10, minValue: 0})
+    const action = useDispatch()
 
-    let [minValue, setMinValue] = useState<number>(state.minValue)
-    let [maxValue, setMaxValue] = useState<number>(state.maxValue)
-    let [counter, setCounter] = useState<number>(state.minValue)
-    let [error, setError] = useState<string>("work")
+    useEffect(() => {
+        localStorage.getItem('startValue'.toString())
+        localStorage.getItem('maxValue'.toString())
 
-    const add = () => {
-        setCounter(counter + 1)
-    }
-    const reset = () => {
-        setCounter(state.minValue)
-    }
-    const settingValues = (state: StateType) => {
-        setMaxValue(state.maxValue)
-        setCounter(state.minValue)
-        setMinValue(state.minValue)
-    }
+        action(saveStartValue(Number(localStorage.getItem('startValue'))))
+        action(saveMaxValue(Number(localStorage.getItem('maxValue'))))
+    }, [action])
 
     return (
         <div className="App">
             <Settings
-                minValue={state.minValue}
-                maxValue={state.maxValue}
-                error={error}
-                saveState={saveState}
-                setError={setError}
-                settingValue={settingValues}
-            />
+                setDisabled={setDisabled} startValue={startValue} maxValue={maxValue}/>
             <Counter
-                counter={counter}
-                add={add}
-                reset={reset}
-                minValue={minValue}
-                maxValue={maxValue}
-                error={error}/>
+                disabled={disabled} startValue={startValue} maxValue={maxValue} countValue={countValue}/>
         </div>
     );
 }

@@ -1,71 +1,63 @@
-import React, {ChangeEvent, useState} from "react";
+import React from "react";
 import style from "./Settings.module.css"
-import Button from "../Button/Button";
-import {StateType} from "../../App";
+import {useDispatch} from "react-redux";
+import {changedMaxValueAC, changedStartValueAC, setValuesAC} from "../Redux/counterReducer";
+import {Display} from "../Display/Display";
+import {Buttons} from "../Button/Button";
 
-export type SettingsType = {
+type SettingsPropsType = {
+    setDisabled: (boolean: boolean) => void
+    startValue: number
     maxValue: number
-    minValue: number
-    settingValue: (state: StateType) => void
-    saveState: (key: string, state: StateType) => void
-    error: string
-    setError: (error: string) => void
 }
 
-export const Settings = React.memo((props: SettingsType) => {
-    let [minValue, setMinValue] = useState<number>(props.minValue)
-    let [maxValue, setMaxValue] = useState<number>(props.maxValue)
+export const Settings = React.memo((props: SettingsPropsType) => {
 
-    const checkValue = (maxValue: number, minValue: number, oldMaxValue: number, oldMinValue: number) => {
-        if (maxValue <= minValue || maxValue > 10 || minValue < 0) {
-            props.setError("incorrect value")
-        } else if (isNaN(minValue) || isNaN(maxValue)) {
-            props.setError("enter value")
-        } else if (oldMaxValue !== maxValue || oldMinValue !== minValue) {
-            props.setError("press\"se\"")
-        } else {
-            props.setError("work")
-        }
-    }
-    const onChangeForMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
-        let newValue = Number.parseInt(e.currentTarget.value)
-        checkValue(newValue, minValue, maxValue, minValue)
-        setMaxValue(newValue)
-    }
-    const onChangeForMinValue = (e: ChangeEvent<HTMLInputElement>) => {
-        let newValue = Number.parseInt(e.currentTarget.value)
-        checkValue(maxValue, newValue, minValue, maxValue)
-        setMinValue(newValue)
-    }
-    let setCallback = () => {
-        props.settingValue({maxValue, minValue})
-        checkValue(maxValue, minValue, minValue, maxValue)
-        props.saveState("savedValues", {maxValue, minValue})
+    const action = useDispatch()
+
+    const onChangeHandlerStart = (inputValue: number) => action(changedStartValueAC(inputValue))
+
+    const onChangeHandlerMax = (inputValue: number) => action(changedMaxValueAC(inputValue))
+
+    const setCallback = () => {
+        action(setValuesAC())
+        localStorage.setItem('startValue', props.startValue.toString())
+        localStorage.setItem('maxValue', props.maxValue.toString())
+        props.setDisabled(false)
     }
 
-    return (
-        <div className={style.counterWrapper}>
-            <div className={style.screen}>
-                <input id="outlined-password-input"
-                       name={"Max Value"}
-                       defaultValue={props.maxValue}
-                       type="number"
-                       onChange={onChangeForMinValue}
-                       onClick={setCallback}
-                />
-                <input id="outlined-password-input"
-                       name={"Max Value"}
-                       defaultValue={props.maxValue}
-                       type="number"
-                       onChange={onChangeForMaxValue}
-                       onClick={setCallback}/>
+    const incorrectValue = 'Incorrect Value'
+    const condition = props.startValue < 0 || props.startValue > props.maxValue || props.startValue === props.maxValue ? incorrectValue : ''
 
-                <div className={style.buttons}>
-                    <Button disabled={props.error !== 'work' && props.error !== 'press \'set\''}
-                            title={'set'}
-                            callback={setCallback}/>
-                </div>
-            </div>
+    return <div className={style.counterWrapper}>
+
+        <div className={style.settings}>
+            <Display title={'Start Value'}
+                     classNameInput={style.inputValues}
+                     onChangeCallback={onChangeHandlerStart}
+                     classNameBlock={'startValue'}
+                     value={props.startValue}
+                     setDisabled={props.setDisabled}
+                     checkCondition={condition}
+            />
+
+            <Display title={'Max Value'}
+                     classNameInput={style.inputValues}
+                     onChangeCallback={onChangeHandlerMax}
+                     classNameBlock={'maxValue'}
+                     value={props.maxValue}
+                     setDisabled={props.setDisabled}
+                     checkCondition={condition}
+            />
         </div>
-    )
+
+        <div className={style.button}>
+            <Buttons title={'Set'}
+                     disable={props.startValue === props.maxValue
+                     || props.startValue > props.maxValue
+                     || props.startValue < 0
+                     || props.maxValue < 0}
+                     onClickHandler={setCallback}/>
+        </div>
+    </div>
 })
